@@ -84,3 +84,20 @@
   height: 300px;
   text-align: left;
 }
+
+.no-movies-message {
+  text-align: center;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8d7da; /* Example: Light red background */
+  border: 1px solid #f5c6cb; /* Example: Red border */
+  border-radius: 5px;
+}
+
+.no-movies-message h3 {
+  color: #721c24; /* Example: Dark red text */
+}
+
+.no-movies-message p {
+  color: #721c24; /* Example: Dark red text */
+}

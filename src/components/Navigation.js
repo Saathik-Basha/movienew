@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
+import React from 'react';
+import { Container, Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom'; // Import Link from React Router
 import './styles/navigation.css'; // Import your CSS file
 
-function Navigation({ onSearch, onFilterRating }) {
-  const [query, setQuery] = useState('');
+function Navigation({ onSearch, onFilterRating, onFilterCategory }) {
+  const [query, setQuery] = React.useState('');
+  const [selectedCategory, setSelectedCategory] = React.useState('');
 
   const handleInputChange = (event) => {
     setQuery(event.target.value);
@@ -24,10 +20,15 @@ function Navigation({ onSearch, onFilterRating }) {
     onFilterRating(rating);
   };
 
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    onFilterCategory(category);
+  };
+
   return (
     <Navbar className='nav' expand="lg" sticky="top">
       <Container>
-        <Navbar.Brand id='navText' href="#home">
+        <Navbar.Brand id='navText' as={Link} to="/">
           <img
             alt=""
             src="./video.png"
@@ -39,10 +40,10 @@ function Navigation({ onSearch, onFilterRating }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link id='navText' href="#home">Home</Nav.Link>
+            <Nav.Link id='navText' as={Link} to="/">Home</Nav.Link>
             <Nav.Link id='navText' href="#link">Movies A-Z</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Login</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/login">Login</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Profile</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Write a Review</NavDropdown.Item>
               <NavDropdown.Divider />
@@ -55,6 +56,12 @@ function Navigation({ onSearch, onFilterRating }) {
               <NavDropdown.Item onClick={() => handleRatingChange(3)}>3 Stars & Up</NavDropdown.Item>
               <NavDropdown.Item onClick={() => handleRatingChange(4)}>4 Stars & Up</NavDropdown.Item>
               <NavDropdown.Item onClick={() => handleRatingChange(5)}>5 Stars Only</NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title="Filter by Category" id="category-nav-dropdown">
+              <NavDropdown.Item className={selectedCategory === 'highestRated' ? 'selected' : ''} onClick={() => handleCategoryChange('highestRated')}>10 Highest Rated</NavDropdown.Item>
+              <NavDropdown.Item className={selectedCategory === 'lowestRated' ? 'selected' : ''} onClick={() => handleCategoryChange('lowestRated')}>10 Lowest Rated</NavDropdown.Item>
+              <NavDropdown.Item className={selectedCategory === 'mostRecent' ? 'selected' : ''} onClick={() => handleCategoryChange('mostRecent')}>10 Most Recent</NavDropdown.Item>
+              <NavDropdown.Item className={selectedCategory === 'oldest' ? 'selected' : ''} onClick={() => handleCategoryChange('oldest')}>10 Oldest</NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Form className="d-flex" onSubmit={handleSearch}>

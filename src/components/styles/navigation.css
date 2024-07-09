@@ -15,3 +15,9 @@
     color: #ccc !important; /* Light grey hover text color */
   }
   
+  .selected {
+    font-weight: bold; /* Example: Make the font bold */
+    background-color: #ffc107; /* Example: Yellow background */
+  }
+  
+  
